@@ -12,13 +12,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ggantycc.ccompmeasurementconverterwithmenu.ui.MainMenuScreen
 import com.ggantycc.ccompmeasurementconverterwithmenu.ui.screen.LengthScreen
+import com.ggantycc.ccompmeasurementconverterwithmenu.ui.theme.CCompMeasurementConverterWithMenuTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ConverterAppNavHost()
+            CCompMeasurementConverterWithMenuTheme {
+                ConverterAppNavHost()
+            }
         }
     }
 }

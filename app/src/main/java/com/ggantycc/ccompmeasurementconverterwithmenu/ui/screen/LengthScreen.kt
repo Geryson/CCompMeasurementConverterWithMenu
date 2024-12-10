@@ -22,7 +22,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ggantycc.ccompmeasurementconverterwithmenu.ui.theme.CCompMeasurementConverterWithMenuTheme
 
 @Composable
 fun LengthScreen(
@@ -30,72 +29,74 @@ fun LengthScreen(
 ) {
     var text by remember { mutableStateOf("") }
     var convertedValue by remember { mutableStateOf("-") }
-    CCompMeasurementConverterWithMenuTheme {
-        Column(modifier = Modifier.padding(30.dp)) {
-            fun convert(value: Double, conversionFactor: Double): String {
-                return (value * conversionFactor).toString()
-            }
-            OutlinedTextField(
-                value = text,
-                onValueChange = { newText -> text = newText.filter { it.isDigit() } },
-                label = { Text("Value") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                modifier = Modifier.fillMaxWidth()
+    Column(modifier = Modifier.padding(30.dp)) {
+        fun convert(value: Double, conversionFactor: Double): String {
+            return (value * conversionFactor).toString()
+        }
+        OutlinedTextField(
+            value = text,
+            onValueChange = { newText -> text = newText.filter { it.isDigit() } },
+            label = { Text("Value") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
+        )
+        data class Conversion(val unit: String, val factor: Double)
+        Row() {
+            val conversions = listOf(
+                Conversion("km -> mi", 0.621371),
+                Conversion("km -> yd", 1093.61),
+                Conversion("km -> ft", 3280.84)
             )
-            data class Conversion(val unit: String, val factor: Double)
-            Row() {
-                val conversions = listOf(
-                    Conversion("km -> mi", 0.621371),
-                    Conversion("km -> yd", 1093.61),
-                    Conversion("km -> ft", 3280.84)
-                )
-                conversions.forEach { conversion ->
-                    Button(
-                        onClick = {
-                            val inputValue = text.toDoubleOrNull()
-                            convertedValue = if (inputValue != null) {
-                                convert(inputValue, conversion.factor)
-                            } else {
-                                "Invalid input"
-                            }
+            conversions.forEach { conversion ->
+                Button(
+                    onClick = {
+                        val inputValue = text.toDoubleOrNull()
+                        convertedValue = if (inputValue != null) {
+                            convert(inputValue, conversion.factor)
+                        } else {
+                            "Invalid input"
                         }
-                    ) {
-                        Text(conversion.unit)
                     }
+                ) {
+                    Text(conversion.unit)
                 }
             }
-            Row() {
-                val conversions = listOf(
-                    Conversion("mi -> km", 1.60934),
-                    Conversion("mi -> yd", 1760.0),
-                    Conversion("mi -> ft", 5280.0)
-                )
-                conversions.forEach { conversion ->
-                    Button(
-                        onClick = {
-                            val inputValue = text.toDoubleOrNull()
-                            convertedValue = if (inputValue != null) {
-                                convert(inputValue, conversion.factor)
-                            } else {
-                                "Invalid input"
-                            }
+        }
+        Row() {
+            val conversions = listOf(
+                Conversion("mi -> km", 1.60934),
+                Conversion("mi -> yd", 1760.0),
+                Conversion("mi -> ft", 5280.0)
+            )
+            conversions.forEach { conversion ->
+                Button(
+                    onClick = {
+                        val inputValue = text.toDoubleOrNull()
+                        convertedValue = if (inputValue != null) {
+                            convert(inputValue, conversion.factor)
+                        } else {
+                            "Invalid input"
                         }
-                    ) {
-                        Text(conversion.unit)
                     }
+                ) {
+                    Text(conversion.unit)
                 }
             }
-            Text(
-                convertedValue, style = TextStyle(
-                    color = Color.Blue, fontWeight = FontWeight.Bold, fontSize = 30.sp
-                )
+        }
+        Text(
+            convertedValue, style = TextStyle(
+                color = Color.Blue, fontWeight = FontWeight.Bold, fontSize = 30.sp
             )
-            OutlinedButton(onClick = { onNavigateToMainMenu() }, modifier = Modifier.padding(0.dp, 20.dp)) {
-                Text("Back")
-            }
+        )
+        OutlinedButton(
+            onClick = { onNavigateToMainMenu() },
+            modifier = Modifier.padding(0.dp, 20.dp)
+        ) {
+            Text("Back")
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
