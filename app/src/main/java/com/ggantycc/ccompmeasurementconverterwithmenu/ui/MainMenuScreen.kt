@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun MainMenuScreen(
     onNavigateToLength: () -> Unit,
-//    onNavigateToTemperature: () -> Unit,
+    onNavigateToTemperature: () -> Unit,
 //    onNavigateToWeight: () -> Unit,
     onNavigateToAbout: () -> Unit,
     onNavigateToHelp: () -> Unit
@@ -30,7 +30,7 @@ fun MainMenuScreen(
         OutlinedButton(modifier = buttonModifier, onClick = { onNavigateToLength() }) {
             Text(text = "Length")
         }
-        OutlinedButton(modifier = buttonModifier, onClick = { /*TODO*/ }) {
+        OutlinedButton(modifier = buttonModifier, onClick = { onNavigateToTemperature() }) {
             Text(text = "Temperature")
         }
         OutlinedButton(modifier = buttonModifier, onClick = { /*TODO*/ }) {

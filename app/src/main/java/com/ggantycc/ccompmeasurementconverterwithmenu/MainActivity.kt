@@ -14,6 +14,7 @@ import com.ggantycc.ccompmeasurementconverterwithmenu.ui.MainMenuScreen
 import com.ggantycc.ccompmeasurementconverterwithmenu.ui.screen.AboutScreen
 import com.ggantycc.ccompmeasurementconverterwithmenu.ui.screen.HelpScreen
 import com.ggantycc.ccompmeasurementconverterwithmenu.ui.screen.LengthScreen
+import com.ggantycc.ccompmeasurementconverterwithmenu.ui.screen.TemperatureScreen
 import com.ggantycc.ccompmeasurementconverterwithmenu.ui.theme.CCompMeasurementConverterWithMenuTheme
 
 class MainActivity : ComponentActivity() {
@@ -42,6 +43,8 @@ fun ConverterAppNavHost(
         composable("mainmenu") {
             MainMenuScreen(
                 onNavigateToLength = { navController.navigate("length") },
+                onNavigateToTemperature = { navController.navigate("temperature") },
+//                onNavigateToWeight = { navController.navigate("weight") },
                 onNavigateToAbout = { navController.navigate("about") },
                 onNavigateToHelp = { navController.navigate("help") }
             )
@@ -51,11 +54,11 @@ fun ConverterAppNavHost(
                 onNavigateToMainMenu = { navController.navigate("mainmenu") }
             )
         }
-//        composable("temperature") {
-//            TemperatureScreen(
-//                onNavigateToMainMenu = { navController.navigate("mainmenu") }
-//            )
-//        }
+        composable("temperature") {
+            TemperatureScreen(
+                onNavigateToMainMenu = { navController.navigate("mainmenu") }
+            )
+        }
 //        composable("weight") {
 //            WeightScreen(
 //                onNavigateToMainMenu = { navController.navigate("mainmenu") }
