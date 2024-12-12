@@ -1,19 +1,18 @@
 package com.ggantycc.ccompmeasurementconverterwithmenu.ui.screen
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -22,61 +21,36 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ggantycc.ccompmeasurementconverterwithmenu.viewmodel.LengthScreenViewModel
 
 @Composable
 fun LengthScreen(
     onNavigateToMainMenu: () -> Unit
 ) {
-    var text by remember { mutableStateOf("") }
-    var convertedValue by remember { mutableStateOf("-") }
+    val viewModel: LengthScreenViewModel = viewModel()
+
     Column(modifier = Modifier.padding(30.dp)) {
-        fun convert(value: Double, conversionFactor: Double): String {
-            return (value * conversionFactor).toString()
-        }
+
         OutlinedTextField(
-            value = text,
-            onValueChange = { newText -> text = newText.filter { it.isDigit() } },
+            value = viewModel.inputValue,
+            onValueChange = { newText -> viewModel.inputValue = newText.filter { it.isDigit() } },
             label = { Text("Value") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth()
         )
-        data class Conversion(val unit: String, val factor: Double)
-        Row() {
-            val conversions = listOf(
-                Conversion("km -> mi", 0.621371),
-                Conversion("km -> yd", 1093.61),
-                Conversion("km -> ft", 3280.84)
-            )
-            conversions.forEach { conversion ->
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(0.dp, 20.dp)
+        ) {
+            items(viewModel.conversions) { conversion ->
                 Button(
                     onClick = {
-                        val inputValue = text.toDoubleOrNull()
-                        convertedValue = if (inputValue != null) {
-                            convert(inputValue, conversion.factor)
-                        } else {
-                            "Invalid input"
-                        }
-                    }
-                ) {
-                    Text(conversion.unit)
-                }
-            }
-        }
-        Row() {
-            val conversions = listOf(
-                Conversion("mi -> km", 1.60934),
-                Conversion("mi -> yd", 1760.0),
-                Conversion("mi -> ft", 5280.0)
-            )
-            conversions.forEach { conversion ->
-                Button(
-                    onClick = {
-                        val inputValue = text.toDoubleOrNull()
-                        convertedValue = if (inputValue != null) {
-                            convert(inputValue, conversion.factor)
-                        } else {
-                            "Invalid input"
-                        }
+                        viewModel.convert(
+                            conversion.factor
+                        )
                     }
                 ) {
                     Text(conversion.unit)
@@ -84,7 +58,7 @@ fun LengthScreen(
             }
         }
         Text(
-            convertedValue, style = TextStyle(
+            viewModel.convertedValue, style = TextStyle(
                 color = Color.Blue, fontWeight = FontWeight.Bold, fontSize = 30.sp
             )
         )
