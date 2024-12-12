@@ -14,6 +14,10 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun MainMenuScreen(
     onNavigateToLength: () -> Unit,
+//    onNavigateToTemperature: () -> Unit,
+//    onNavigateToWeight: () -> Unit,
+    onNavigateToAbout: () -> Unit,
+    onNavigateToHelp: () -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -32,10 +36,10 @@ fun MainMenuScreen(
         OutlinedButton(modifier = buttonModifier, onClick = { /*TODO*/ }) {
             Text(text = "Weight")
         }
-        OutlinedButton(modifier = buttonModifier, onClick = { /*TODO*/ }) {
+        OutlinedButton(modifier = buttonModifier, onClick = { onNavigateToAbout() }) {
             Text(text = "About")
         }
-        OutlinedButton(modifier = buttonModifier, onClick = { /*TODO*/ }) {
+        OutlinedButton(modifier = buttonModifier, onClick = { onNavigateToHelp() }) {
             Text(text = "Help")
         }
     }

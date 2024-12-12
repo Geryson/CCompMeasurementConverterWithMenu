@@ -11,6 +11,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ggantycc.ccompmeasurementconverterwithmenu.ui.MainMenuScreen
+import com.ggantycc.ccompmeasurementconverterwithmenu.ui.screen.AboutScreen
+import com.ggantycc.ccompmeasurementconverterwithmenu.ui.screen.HelpScreen
 import com.ggantycc.ccompmeasurementconverterwithmenu.ui.screen.LengthScreen
 import com.ggantycc.ccompmeasurementconverterwithmenu.ui.theme.CCompMeasurementConverterWithMenuTheme
 
@@ -39,11 +41,33 @@ fun ConverterAppNavHost(
     ) {
         composable("mainmenu") {
             MainMenuScreen(
-                onNavigateToLength = { navController.navigate("length") }
+                onNavigateToLength = { navController.navigate("length") },
+                onNavigateToAbout = { navController.navigate("about") },
+                onNavigateToHelp = { navController.navigate("help") }
             )
         }
         composable("length") {
             LengthScreen(
+                onNavigateToMainMenu = { navController.navigate("mainmenu") }
+            )
+        }
+//        composable("temperature") {
+//            TemperatureScreen(
+//                onNavigateToMainMenu = { navController.navigate("mainmenu") }
+//            )
+//        }
+//        composable("weight") {
+//            WeightScreen(
+//                onNavigateToMainMenu = { navController.navigate("mainmenu") }
+//            )
+//        }
+        composable("about") {
+            AboutScreen(
+                onNavigateToMainMenu = { navController.navigate("mainmenu") }
+            )
+        }
+        composable("help") {
+            HelpScreen(
                 onNavigateToMainMenu = { navController.navigate("mainmenu") }
             )
         }

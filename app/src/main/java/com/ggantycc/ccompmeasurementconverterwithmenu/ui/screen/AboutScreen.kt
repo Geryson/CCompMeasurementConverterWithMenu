@@ -14,13 +14,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun AboutScreen() {
+fun AboutScreen(
+    onNavigateToMainMenu: () -> Unit
+) {
     Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center) {
         Text("Measurement converter", fontSize = 30.sp)
         Text("https://github.com/Geryson", fontSize = 25.sp)
-        OutlinedButton(onClick = { /*TODO*/ }, modifier = Modifier.padding(16.dp)) {
+        OutlinedButton(onClick = { onNavigateToMainMenu() }, modifier = Modifier.padding(16.dp)) {
             Text("Back")
         }
     }
@@ -29,5 +31,5 @@ fun AboutScreen() {
 @Preview(showBackground = true)
 @Composable
 fun AboutScreenPreview() {
-    AboutScreen()
+    AboutScreen( onNavigateToMainMenu = {})
 }
